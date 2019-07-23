@@ -1,14 +1,16 @@
 # Create a MS Teams Channel in an existing Team for xMatters Flow Designer
 This is a collection of custom steps that use the new Microsoft Graph API.  The ultimate aim is to create a new Channel in an existing Team in MS Teams.  It's also possible you may find use for some of these steps to help do other things.
 
-We're going to be putting in X steps which each do things that help us create a channel.  These are:
+We're going to be putting in 3 steps which each do things that help us create a channel.  These are:
 1. **Authenticate** - Use some predefined tokens to authenticate on the API and get an access token that lets us cary out other actions for a short time.
-1. **Get Team IDs** - Find an existing Team knowing the Group and Team name and bring back the Team and Group IDs.
+1. **Get Team Info** - Find an existing Team knowing the Group and Team name and bring back the Team ID and other info.
 1. **Create Channel** - Create a channel in an existing Team knowing the ID of the existing Team.
 
 The usual use here would be to have xMatters create a new channel dedicated to the resolution of a newly discovered issue, perhaps when xMatters is initiated automatically by some monitoring tool or perhaps when a Major Incident is newly declared.  If you find other uses for this though please let us know!
 
-**FAQ**  Can we create a team dynamically?  Yes it's been done but we don't do it here.  If that's something you want to do please ask xMatters Support nicely :)
+**FAQ**
+1. *Can we create a team dynamically?*  Yes it's been done but we don't do it here.  If that's something you want to do please ask xMatters Support nicely :o)
+1. *I don't want to do this straight into my prod Office 365, where can I test it?*  You can't test in a Free Teams, it is missing some important elements.  You can create a Office 365 Trial and test it there though.  See [Free versions of MS Teams and the Office 365 Trial Subscription](#free-versions-of-ms-teams-and-the-office-365-trial-subscription)
 
 This is repo makes part fo the [xMatters Labs Flow Steps](https://github.com/xmatters/xMatters-Labs-Flow-Steps) parent repo.
 
@@ -36,7 +38,7 @@ To get an Office 365 Trial follow [Phase 2 of Office 365 dev/test environment](h
 
 When you're done you'll have a login username and password for a global admin on your new Office Environment.  The username will be an email address that ends .onmicrosoft.com.  This account can be used to login to the Teams UI and to the Azure Console as a global admin in the next sections.
 
-# Microsoft Office 365 setup via Azure Console -  to be tidied
+# Microsoft Office 365 setup via Azure Console
 These steps work by making calls on the [Microsoft Graph API](https://docs.microsoft.com/en-us/graph/overview) for Office 365.  At the time of writing the xMatters inbuilt steps for MS Teams use the Teams API so the authentication for these steps are quite different (though they can be used in a flow along with the built in steps).  We're going to need to access the Microsoft Azure Console portal for your Office 365 environment and add an App Registration which will enable xMatters to use the Graph API to query and make changes to your Teams application inside Office 365.
 
 ## Add an App Registration
@@ -89,14 +91,14 @@ A client secret is a bit like the password that xMatters will need to know to be
 
 # Flow Designer Steps
 
-Here are the configurations and scripts you will require to create each of the custom steps.  Open a communication plan in xMatters and then open the flow designer for any of the forms/flows.  On the *CUSTOM* tab in right had toolbar you will find the *Create a custom step* button.  For each of these steps click that button and fill in the details as shown here.
+Here are the configurations and scripts you will require to create each of the custom steps.  Open a communication plan in xMatters and then open the flow designer for any of the forms/flows.  On the **CUSTOM** tab in right had toolbar you will find the **Create a custom step** button.  For each of these steps click that button and fill in the details as shown here.
 
 Once you have all the custom steps created you can drag them into any flow in that communication plan and configure the step. You can use them over and over again in any flow on that com plan.
 
 ## Authenticate
 Authenticate with the Microsoft Graph API and get a session token to authorise subsequent steps.
 
-To do anything in MS Teams through the Graph API you need to first get a session token.  Send in your Tenant ID, Client ID and Client Secret retrieved from the Azure portal with the above steps.  In return you will get a Session Token as an output that can be passed to later steps.
+To do anything in MS Teams through the Graph API you need to first get a session token.  Send in your **Tenant ID**, **Client ID** and **Client Secret** retrieved from the [Azure portal with the above steps](#microsoft-office-365-setup-via-azure-console).  In return you will get a Session Token as an output that can be passed to later steps.
 
 ### Settings
 
@@ -117,7 +119,7 @@ To do anything in MS Teams through the Graph API you need to first get a session
 | ----- | ----------| --- | --- | --------- | ------------- | --------- |
 | Tenant ID  | Yes | 0 | 2000 | Login to the Azure portal and create an App Registration, you'll be given the "Directory (tenant) ID" which should then be pasted into here. |  | No |
 | Client ID | Yes | 0 | 2000 | Login to the Azure portal and create an App Registration, you'll be given the "Application (client) ID" which should then be pasted into here. |  | No |
-| Client Secret | Yes | 0 | 2000 | Login to the Azure portal and create an App Registration, then in Certificates & secrets on that registration create a Client secret. You'll be given a complex secrate which should then be pasted into here. |  | No |
+| Client Secret | Yes | 0 | 2000 | Login to the Azure portal and create an App Registration, then in Certificates & secrets on that registration create a Client secret. You'll be given a complex secret which should then be pasted into here. |  | No |
 
 <img src="media/Authenticate - Inputs.png" >
 
