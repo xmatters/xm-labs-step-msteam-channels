@@ -31,9 +31,9 @@ This is repo makes part fo the [xMatters Labs Flow Steps](https://github.com/xma
 # Files - to do
 
 * [README.md](README.md) - This file, which has all the code and setup instructions. Just about everything you need!
-* [MS Teams - Authenticate.png](/media/MS Teams - Authenticate.png) - Logo for the Authenticate step
-* [MS Teams - Get Team.png](/media/MS Teams - Get Team.png) - Logo for the Authenticate step
-* [MS Teams - Create Channel.png](/media/MS Teams - Create Channel.png) - Logo for the Authenticate step
+* [MS Teams - Authenticate.png](/media/MS%20Teams%20-%20Authenticate.png) - Logo for the Authenticate step
+* [MS Teams - Get Team.png](/media/MS%20Teams%20-%20Get%20Team.png) - Logo for the Authenticate step
+* [MS Teams - Create Channel.png](/media/MS%20Teams%20-%20Create%20Channel.png) - Logo for the Authenticate step
 
 # Microsoft Teams
 [Microsoft Teams](https://products.office.com/en-us/microsoft-teams/group-chat-software) is the chat tool that comes as part of the [Microsoft Office 365](https://www.office.com/) suite.  MS Teams has its own (slightly older) API but we're not making use of it here.  Instead we're using the [Microsoft Graph API](https://docs.microsoft.com/en-us/graph/overview) for Office 365 which can do all sorts of things in the MS Office environment, including creating a Channel in an MS Teams Team.
