@@ -9,8 +9,13 @@ We're going to be putting in 3 steps which each do things that help us create a 
 The usual use here would be to have xMatters create a new channel dedicated to the resolution of a newly discovered issue, perhaps when xMatters is initiated automatically by some monitoring tool or perhaps when a Major Incident is newly declared.  If you find other uses for this though please let us know!
 
 **FAQ**
-1. *Can we create a team dynamically?*  Yes it's been done but we don't do it here.  If that's something you want to do please ask xMatters Support nicely :o)
-1. *I don't want to do this straight into my prod Office 365, where can I test it?*  You can't test in a Free Teams, it is missing some important elements.  You can create a Office 365 Trial and test it there though.  See [Free versions of MS Teams and the Office 365 Trial Subscription](#free-versions-of-ms-teams-and-the-office-365-trial-subscription)
+1. *Can we create a team dynamically?*
+
+  Yes it's been done but we don't do it here.  If that's something you want to do please ask xMatters Support nicely :o)
+
+1. *I don't want to do this straight into my prod Office 365, where can I test it?*
+
+ You can't test in a Free Teams, it is missing some important elements.  You can create a Office 365 Trial and test there though.  See [Free versions of MS Teams and the Office 365 Trial Subscription](#free-versions-of-ms-teams-and-the-office-365-trial-subscription)
 
 This is repo makes part fo the [xMatters Labs Flow Steps](https://github.com/xmatters/xMatters-Labs-Flow-Steps) parent repo.
 
@@ -25,8 +30,10 @@ This is repo makes part fo the [xMatters Labs Flow Steps](https://github.com/xma
 
 # Files - to do
 
-* [logo.png](/media/hat.png) - Logo for the Hat Factory
-* [otherfile.file](/otherfile.file) - Some other file that does something useful.
+* [README.md](README.md) - This file, which has all the code and setup instructions. Just about everything you need!
+* [MS Teams - Authenticate.png](/media/MS Teams - Authenticate.png) - Logo for the Authenticate step
+* [MS Teams - Get Team.png](/media/MS Teams - Get Team.png) - Logo for the Authenticate step
+* [MS Teams - Create Channel.png](/media/MS Teams - Create Channel.png) - Logo for the Authenticate step
 
 # Microsoft Teams
 [Microsoft Teams](https://products.office.com/en-us/microsoft-teams/group-chat-software) is the chat tool that comes as part of the [Microsoft Office 365](https://www.office.com/) suite.  MS Teams has its own (slightly older) API but we're not making use of it here.  Instead we're using the [Microsoft Graph API](https://docs.microsoft.com/en-us/graph/overview) for Office 365 which can do all sorts of things in the MS Office environment, including creating a Channel in an MS Teams Team.
