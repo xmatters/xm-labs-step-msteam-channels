@@ -51,7 +51,7 @@ These steps work by making calls on the [Microsoft Graph API](https://docs.micro
 An app registration is a bit like a user account for xMatters to use to connect to the Graph API
 
 1. Log into the Azure Console with a company account at https://portal.azure.com
-<img width=90% src="media/Create Registration.gif" >
+    <img width=90% src="media/Create Registration.gif" >
 
 1. In the console search for and click through to **App registrations**
 1. Click **New registration**
@@ -66,7 +66,7 @@ An app registration is a bit like a user account for xMatters to use to connect 
 ## Add API Permissions to the App Registration
 The App Registration you've just created needs to have some permissions added so that xMatters can do things with it.  (This adds the permissions we've been working with, it's possible this could be rationalised.)
 
-<img width=90% src="media/App API permissions.gif" >
+<img width=90% src="media/Add API permissions.gif" >
 
 1. In the App Registration you've created click **API permissions** on the left.
 1. You'll see that the App has permissions to read user records only. Click **Add a permission**
