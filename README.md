@@ -12,7 +12,6 @@ The usual use here would be to have xMatters create a new channel dedicated to t
 1. *Can we create a team dynamically?*
 
   Yes it's been done but we don't do it here.  If that's something you want to do please ask xMatters Support nicely :o)
-
 1. *I don't want to do this straight into my prod Office 365, where can I test it?*
 
  You can't test in a Free Teams, it is missing some important elements.  You can create a Office 365 Trial and test there though.  See [Free versions of MS Teams and the Office 365 Trial Subscription](#free-versions-of-ms-teams-and-the-office-365-trial-subscription)
