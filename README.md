@@ -571,7 +571,7 @@ function getChannel(channelName, groupId, token)
 ```
 
 # Get Flowing!
-Put it all together in a flow, it will probably look similar to my one:
+Put it all together in a flow using the **Client ID**, **Tenant ID** and **Client Secret** you got from the Azure Console.  It will probably look similar to my one:
 <img src="media/Flow Example.png" >
 
 Please consider using com plan constants for any fixed values that you want to put in the steps, in particular the 3 authentication IDs and Codes.   If you want to use them again in other flows it makes is so much easier to quickly change them all at the same time if you used constants.
