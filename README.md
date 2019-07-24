@@ -112,7 +112,7 @@ To do anything in MS Teams through the Graph API you need to first get a session
 | ----- | ----- |
 | Name | MS Teams - Authenticate |
 | Description | Run this step at the beginning of your flow to get an session token that can then be used for each subsequent Teams step. For more details on how to get the three inputs for this step see the instructions on the GitHub repo xm-labs-step-msteam-channels  |
-| Icon | <kbd> <img src="/media/MS Teams - Authenticate.png"></kbd> |
+| Icon | <kbd> <img width=70 src="/media/MS Teams - Authenticate.png"></kbd> |
 | Include Endpoint | Yes |
 | Endpoint Type |	No Authentication |
 | Endpoint Label | MS Graph API |
@@ -211,7 +211,7 @@ The returned Team ID is required by the **Create Channel** step to address the T
 | ----- | ----- |
 | Name | MS Teams - Get Team Info |
 | Description | This step will find a Team and return some information about it including it's ID which can be useful for onward steps.  |
-| Icon | <kbd> <img src="/media/MS Teams - Get Team.png"></kbd> |
+| Icon | <kbd> <img width=70 src="/media/MS Teams - Get Team.png"></kbd> |
 | Include Endpoint | Yes |
 | Endpoint Type | No Authentication |
 | Endpoint Label | MS Graph API |
@@ -405,7 +405,7 @@ Before you are able to call this step your flow will have had to have used the *
 | ----- | ----- |
 | Name | MS Teams - Create Channel |
 | Description | Specify a channel name and this step will create the channel if it doesn't already exist and return the created channel ID. If the channel does already exist we simply return the ID of the channel.  |
-| Icon | <kbd> <img src="media/MS Teams - Create Channel.png"></kbd> |
+| Icon | <kbd> <img width=70 src="media/MS Teams - Create Channel.png"></kbd> |
 | Include Endpoint | Yes |
 | Endpoint Type | No Authentication |
 | Endpoint Label | MS Graph API |
