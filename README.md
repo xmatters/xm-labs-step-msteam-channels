@@ -569,3 +569,11 @@ function getChannel(channelName, groupId, token)
     return false;
 }
 ```
+
+# Get Flowing!
+Put it all together in a flow, it will probably look similar to my one:
+<img src="media/Flow Example.png" >
+
+Please consider using com plan constants for any fixed values that you want to put in the steps, in particular the 3 authentication IDs and Codes.   If you want to use them again in other flows it makes is so much easier to quickly change them all at the same time if you used constants.
+
+There's lots of help on [Flow Designer on the xMatters help pages](https://help.xmatters.com/ondemand/xmodwelcome/flowdesigner/laying-out-flow-designer.htm).
