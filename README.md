@@ -38,11 +38,13 @@ This is repo makes part fo the [xMatters Labs Flow Steps](https://github.com/xma
 [Microsoft Teams](https://products.office.com/en-us/microsoft-teams/group-chat-software) is the chat tool that comes as part of the [Microsoft Office 365](https://www.office.com/) suite.  MS Teams has its own (slightly older) API but we're not making use of it here.  Instead we're using the [Microsoft Graph API](https://docs.microsoft.com/en-us/graph/overview) for Office 365 which can do all sorts of things in the MS Office environment, including creating a Channel in an MS Teams Team.
 
 ## Free versions of MS Teams and the Office 365 Trial Subscription
-This process will not work with a free Teams the like that you'll get by signing up at https://products.office.com/en-us/microsoft-teams/group-chat-software.  It doesn't work because we need the Microsoft Graph API and the Azure Console portal to setup permissions and these don't come with the free Teams.  However, you can sign up for an Office 365 Trial Subscription which will come with Teams, the Graph API and the Azure Console.
+This process will not work with a standard free Teams the like that you can get really easily.  These Teams don't work because we need the Microsoft Graph API and the Azure Console portal to setup permissions which don't come with the free Teams.  However, you can sign up for an Office 365 Trial Subscription which will come with Teams, the Graph API and the Azure Console.
 
-To get an Office 365 Trial follow [Phase 2 of Office 365 dev/test environment](https://docs.microsoft.com/en-us/office365/enterprise/office-365-dev-test-environment#phase-2-create-an-office-365-trial-subscription) choosing the "*lightweight Office 365 dev/test environment*" option.  You do not need to do Phase 1, 3 or 4.
+To get an Office 365 Trial follow [Phase 1: Create your Office 365 E5 subscription](https://docs.microsoft.com/en-gb/microsoft-365/enterprise/lightweight-base-configuration-microsoft-365-enterprise).  You just need Phase 1, you do not need to do Phase 2 -5.
 
 When you're done you'll have a login username and password for a global admin on your new Office Environment.  The username will be an email address that ends .onmicrosoft.com.  This account can be used to login to the Teams UI and to the Azure Console as a global admin in the next sections.
+
+Login to [MS Teams](https://teams.microsoft.com/) and create your first Team.  Now you're good to go!
 
 # Microsoft Office 365 setup via Azure Console
 These steps work by making calls on the [Microsoft Graph API](https://docs.microsoft.com/en-us/graph/overview) for Office 365.  At the time of writing the xMatters inbuilt steps for MS Teams use the Teams API so the authentication for these steps are quite different (though they can be used in a flow along with the built in steps).  We're going to need to access the Microsoft Azure Console portal for your Office 365 environment and add an App Registration which will enable xMatters to use the Graph API to query and make changes to your Teams application inside Office 365.
@@ -82,7 +84,7 @@ The App Registration you've just created needs to have some permissions added so
 
  Click **Add permissions**
 
-This App registration now has all the permissions it needs but admin consent needs to be granted.  If you are an administrator then click **Grant admin consent for <Company Name>** at the bottom of the page and then confirm granting consent.  If you're not an administrator then you'll need to find a friendly admin to click the button for you.
+This App registration now has all the permissions it needs but admin consent needs to be granted.  If you are an administrator then click **Grant admin consent for <Company Name>** at the top next to Add a permission and then confirm granting consent.  If you're not an administrator then you'll need to find a friendly admin to click the button for you.
 
 ## Create a Client Secret
 A client secret is a bit like the password that xMatters will need to know to be able to use the App Registration you've created.
@@ -92,7 +94,7 @@ A client secret is a bit like the password that xMatters will need to know to be
 1. Still in the App Registration you've created, click **Certificates & secrets**
 1. Under **Client secrets** click **New client secret**
 1. Enter a **Description** if you want.  Choose how long you want this secret to last before it expires.  Click **Add**
-1. A **Client Secret** will be created and you'll be able to see the value.  Make note of this with the Client ID and Tenant ID, you'll need it later too.
+1. A **Client Secret** will be created and you'll be able to see the value.  Make note of this along with the Client ID and Tenant ID, you'll need it later too.
 
 
 # Flow Designer Steps
@@ -115,7 +117,9 @@ To do anything in MS Teams through the Graph API you need to first get a session
 | Icon | <kbd> <img width=70 src="/media/MS Teams - Authenticate.png"></kbd> |
 | Include Endpoint | Yes |
 | Endpoint Type |	No Authentication |
-| Endpoint Label | MS Graph API |
+| Endpoint Label | MS Auth API |
+
+!The script is not using this label.   Label and script should be changed to 'MS Login API' and then this needs to use a different endpoint to the rest at 'https://login.microsoftonline.com/'  A section needs to be added for creating the endpoints, the main graph endpoint is 'https://graph.microsoft.com/' both are no authentication.
 
 <img src="media/Authenticate - Settings.png" >
 
@@ -158,7 +162,7 @@ function bearerToken(tenantId, client_id, client_secret)  {
 
     // Path is https://login.microsoftonline.com/{tenant}/oauth2/v2.0/authorize
     var request = http.request({
-      "endpoint": "MSTeams",
+      "endpoint": "MS Auth API",
       "path": "/"+ tenantId+"/oauth2/v2.0/token",
       "method": "POST",
       "headers": {
@@ -569,6 +573,19 @@ function getChannel(channelName, groupId, token)
     return false;
 }
 ```
+
+# Endpoints
+
+You'll need two endpoints.  Both of these endpoints are type No Authentication.  The MS Auth API endpoint is used to get API Tokens and the MS Graph API is the one for actually doing stuff.
+
+When you were creating the custom steps above you had to name then exactly as shown as that's how it's written in the script.  Here you can call them what like as long as you use the right one on the right steps.  Here I've just used the same names as we used in the custom step configuration.
+
+| Name | Steps | Base URL | Trust self-signed certificates | Endpoint Type |
+| -------------- | ----- | -------- | ------------------------------ | ------------- |
+| MS Auth API | Authenticate | https://login.microsoftonline.com/ | No | No Authentication |
+| MS Graph API | Get Team Info, Create Channel | https://graph.microsoft.com/ | No | No Authentication |
+
+<img width="500px" src="media/Endpoint - MS Auth API.png" > <img width="500px" src="media/Endpoint - MS Graph API.png" >
 
 # Get Flowing!
 Put it all together in a flow using the **Client ID**, **Tenant ID** and **Client Secret** you got from the Azure Console.  It will probably look similar to my one:
