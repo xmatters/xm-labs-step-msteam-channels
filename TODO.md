@@ -51,3 +51,5 @@ There's a delete channel call  https://docs.microsoft.com/en-us/graph/api/channe
 #Interesting ideas
 
 Create tabs in the channel that describe the incident or things to do.
+
+dif
