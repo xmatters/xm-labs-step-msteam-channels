@@ -11,12 +11,12 @@ The usual use here would be to have xMatters create a new channel dedicated to t
 **FAQ**
 1. *Can we create a team dynamically?*
 
-    Yes it's been done but we don't do it here.  If that's something you want to do please ask xMatters Support nicely :o)
+    Yes it's been done but we don't do it here.
 1. *I don't want to do this straight into my prod Office 365, where can I test it?*
 
     You can't test in a Free Teams, it is missing some important elements.  You can create a Office 365 Trial and test there though.  See [Free versions of MS Teams and the Office 365 Trial Subscription](#free-versions-of-ms-teams-and-the-office-365-trial-subscription)
 
-This is repo makes part fo the [xMatters Labs Flow Steps](https://github.com/xmatters/xMatters-Labs-Flow-Steps) parent repo.
+This is repo is part of the [xMatters Labs Flow Steps](https://github.com/xmatters/xMatters-Labs-Flow-Steps) parent repo.
 
 
 ---------
@@ -27,7 +27,7 @@ This is repo makes part fo the [xMatters Labs Flow Steps](https://github.com/xma
 
 ---------
 
-# Files - to do
+# Files
 
 * [README.md](README.md) - This file, which has all the code and setup instructions. Just about everything you need!
 * [MS Teams - Authenticate.png](/media/MS%20Teams%20-%20Authenticate.png) - Logo for the Authenticate step
@@ -577,3 +577,5 @@ Put it all together in a flow using the **Client ID**, **Tenant ID** and **Clien
 Please consider using com plan constants for any fixed values that you want to put in the steps, in particular the 3 authentication IDs and Codes.   If you want to use them again in other flows it makes is so much easier to quickly change them all at the same time if you used constants.
 
 There's lots of help on [Flow Designer on the xMatters help pages](https://help.xmatters.com/ondemand/xmodwelcome/flowdesigner/laying-out-flow-designer.htm).
+
+(Copyright xMatters Feb 2020)
