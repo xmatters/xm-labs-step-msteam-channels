@@ -116,11 +116,11 @@ A client secret is a bit like the password that xMatters will need to know to be
 
 This is optional, but if the aim is to post messages to a channel, even just to start the channel with some details of what it was created for, you're going to need to post *as* someone.  Though it will probably work as you it's nice if it doesn't look like it's you that's posting all these messages.  It probably makes sense to create a user that represents xMatters.  You can do that here in the Azure Portal and get the new user's **Username** and **Password**.  Keep them safe as we're actually going to need them in the xMatters configuration.
 
-Once you've created the new user just log into Teams as them and accept the terms and conditions.  This is also a good time to create the Team you want to put the channels into if you haven't already.  If you have created the team join it as this user.
+Once you've created the new user just log into Teams as them and accept the terms and conditions and go thorough the mandatory password change.  This is also a good time to create the Team you want to put the channels into if you haven't already.  If you have created the team join it as this user.
 
 # Flow Designer Steps
 
-Now for the good stuff!  Download workflow file [MSTeamsManageChannels.zip](MSTeamsManageChannels.zip) and import it to your instance (help importing workflows).  The workflow has an example flow that uses four new custom steps.  If you want to go ahead and try it simply
+Now for the good stuff!  Download workflow file [MSTeamsManageChannels.zip](MSTeamsManageChannels.zip) and import it to your instance ([help importing workflows](https://help.xmatters.com/ondemand/xmodwelcome/workflows/manage-workflows.htm#ImportExport)).  The workflow has an example flow that uses four new custom steps.  If you want to go ahead and try it simply
 1. Configure the **Delegated Authenticate** step and add the **Client ID** and **Client Secrete** you've created above along with the **Username** and **Password** of a user you want to cary out actions as.
 1. Configure the **Get Team Info** step and add the Team Name of the team you're going to create new channels into.
 1. To look as real as possible there is a HTTP Trigger at the beginning of this example flow that is designed to take a call from our **ServiceNow Engage with xMatters** integration.  If you have ServiceNow you can point the engage form to this trigger.  If you don't have a ServiceNow to hand you can quickly try triggering this with [Postman](https://www.postman.com/) or similar to post a packet like this to the trigger URL.  You can get the trigger URL by configuring the HTTP Trigger step.  Authenticate as your own user using basic.  Make sure you use the Header `Content-Type: application/json`
@@ -138,7 +138,7 @@ Now for the good stuff!  Download workflow file [MSTeamsManageChannels.zip](MSTe
 }
 ```
 
-By importing this workflow the custom steps will be added you your instance in state Development and unshared.  In this state you personally will be able to use them in this and other workflows.  When you're happy with them you should [set them to a Deployed state](TBC) and if you want other people to be able to use them you should [share the steps](TBC) too.
+By importing this workflow the custom steps will be added you your instance in state Development and unshared.  In this state you personally will be able to use them in this and other workflows.  When you're happy with them you should [set their state to Deployed](https://help.xmatters.com/ondemand/xmodwelcome/flowdesigner/manage-step-versions.htm#CreateVersion) and if you want other people to be able to use them you should [share the steps](https://help.xmatters.com/ondemand/xmodwelcome/flowdesigner/share-steps.htm) too.
 
 ## Authentication Steps
 
@@ -205,7 +205,7 @@ Outputs:
 ### Post to Channel
 <img width=50px src="media/MS Teams - Post Message.png" >
 
-Post a message to a channel. You can use some HTML in your message.  For instance, use \<br/> to get a new line within the message and surround text with \<b> and \<\b> to make it bold.
+Post a message to a channel. You can use some HTML in your message.  For instance, use `<br/>` to get a new line within the message and surround text with `<b>` and `<\b>` to make it bold.
 
 Inputs:
 - `Delegated Session Authentication Token` Must be from the Delegated Authenticate step
