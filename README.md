@@ -114,6 +114,10 @@ A client secret is a bit like the password that xMatters will need to know to be
 
 <img width=90% src="media/Add xMatters User.gif" >
 
+This is optional, but if the aim is to post messages to a channel, even just to start the channel with some details of what it was created for, you're going to need to post *as* someone.  Though it will probably work as you it's nice if it doesn't look like it's you that's posting all these messages.  It probably makes sense to create a user that represents xMatters.  You can do that here in the Azure Portal and get the new user's **Username** and **Password**.  Keep them safe as we're actually going to need them in the xMatters configuration.
+
+Once you've created the new user just log into Teams as them and accept the terms and conditions.  This is also a good time to create the Team you want to put the channels into if you haven't already.  If you have created the team join it as this user.
+
 # Flow Designer Steps
 
 Now for the good stuff!  Download workflow file [MSTeamsManageChannels.zip](MSTeamsManageChannels.zip) and import it to your instance (help importing workflows).  The workflow has an example flow that uses four new custom steps.  If you want to go ahead and try it simply
