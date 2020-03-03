@@ -38,17 +38,23 @@ This is repo is part of the [xMatters Labs Flow Steps](https://github.com/xmatte
 * [MS Teams - Delegated Authenticate.png](/media/MS%20Teams%20-%20Delegated Authenticate.png) - Logo for the Delegated Authenticate step
 * [MS Teams - Get Team.png](/media/MS%20Teams%20-%20Get%20Team.png) - Logo for the Get Team Info step
 * [MS Teams - Create Channel.png](/media/MS%20Teams%20-%20Create%20Channel.png) - Logo for the Create Channel step
-* [MS Teams - Post Message.png](/media/MS%20Teams%20-%20Post Message.png) - Logo for the Post to Channel step
+* [MS Teams - Post Message.png](/media/MS%20Teams%20-%20Post%20Message.png) - Logo for the Post to Channel step
 
 # Microsoft Teams
 [Microsoft Teams](https://products.office.com/en-us/microsoft-teams/group-chat-software) is the chat tool that comes as part of the [Microsoft Office 365](https://www.office.com/) suite.  MS Teams has its own (slightly older) API but we're not making use of it here.  Instead we're using the [Microsoft Graph API](https://docs.microsoft.com/en-us/graph/overview) for Office 365 which can do all sorts of things in the MS Office environment, including creating a Channel in an MS Teams Team and post to a Channel without needing a channel web hook.
+
+## MS Teams and xMatters
+
+If all you want to do is post to a standard channel in Teams you can do it much more simply than with this repo. Do check out the [built in step for MS Teams](https://help.xmatters.com/ondemand/xmodwelcome/flowdesigner/microsoft-teams-steps.htm) which uses the Teams API and leverages [Connectors in Teams](https://docs.microsoft.com/en-us/microsoftteams/office-365-custom-connectors).
+
+If you want to make callout events right from Teams then do look up our [bot integration for MS Teams](https://help.xmatters.com/integrations/socialchat/microsoftteams.htm).  Though it is separate to the work in this repo it's complimentary and you may well want to put the xMatters bot in the channels you auto create to enable Teams users to leverage the power of xMatters right from the chat window.
 
 ## Free versions of MS Teams and the Office 365 Trial Subscription
 This process will not work with a free Teams the like you'll get by signing up at products.office.com/en-us/microsoft-teams/group-chat-software.  It doesn't work because we need the Microsoft Graph API and the Azure Console portal to setup permissions and these don't come with the free Teams.  However, you can sign up for an Office 365 Trial Subscription which will come with Teams, the Graph API and the Azure Console.
 
 To get an Office 365 Trial follow Phase 1 of [The lightweight base configuration](https://docs.microsoft.com/en-gb/microsoft-365/enterprise/lightweight-base-configuration-microsoft-365-enterprise). You only need to do **Phase 1: Create your Office 365 E5 subscription**.
 
-When you're done you'll have a login username and password for a global admin on your new Office Environment.  The username will be an email address that ends .onmicrosoft.com.  This account can be used to login to the [Teams WebUI](https://teams.microsoft.com/) and Desktop App as well as the Azure Console as a global admin in the next sections.
+When you're done you'll have a login username and password for a global admin on your new Office Environment.  The username will be an email address that ends `.onmicrosoft.com`.  This account can be used to login to the [Teams WebUI](https://teams.microsoft.com/) and Desktop App as well as the [Azure Console](https://portal.azure.com) as a global admin in the next sections.
 
 # Microsoft Office 365 setup via Azure Console
 These steps work by making calls on the [Microsoft Graph API](https://docs.microsoft.com/en-us/graph/overview) for Office 365.  At the time of writing the xMatters inbuilt steps for MS Teams use the Teams API so the authentication for these steps are quite different (though they can be used in a flow along with the built in steps).  We're going to need to access the Microsoft Azure Console portal for your Office 365 environment and add an App Registration which will enable xMatters to use the Graph API to query and make changes to your Teams application inside Office 365.
@@ -85,7 +91,7 @@ The App Registration you've just created needs to have some permissions added so
 1. Find and select:
  - **Group** > **Group.ReadWrite.All**
  - **User** > **User.Read**
-1. Now back at the top click **Application permissions** on the right.
+10. Now back at the top click **Application permissions** on the right.
 1. Find and select:
  -  **Directory** > **Directory.ReadWrite.All**
  -  **Group** > **Group.ReadWrite.All**
