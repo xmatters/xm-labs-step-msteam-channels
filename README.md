@@ -35,7 +35,7 @@ This is repo is part of the [xMatters Labs Flow Steps](https://github.com/xmatte
 * [README.md](README.md) - This file, setup help and instructions. A great start!
 * [MSTeamsManageChannels.zip](MSTeamsManageChannels.zip) - An export of an xMatters Workflow containing all 5 steps and an example flow to get you started. Everything you need!
 * [MS Teams - Authenticate.png](/media/MS%20Teams%20-%20Authenticate.png) - Logo for the Application Authenticate step
-* [MS Teams - Delegated Authenticate.png](/media/MS%20Teams%20-%20Delegated Authenticate.png) - Logo for the Delegated Authenticate step
+* [MS Teams - Delegated Authenticate.png](/media/MS%20Teams%20-%20Delegated%20Authenticate.png) - Logo for the Delegated Authenticate step
 * [MS Teams - Get Team.png](/media/MS%20Teams%20-%20Get%20Team.png) - Logo for the Get Team Info step
 * [MS Teams - Create Channel.png](/media/MS%20Teams%20-%20Create%20Channel.png) - Logo for the Create Channel step
 * [MS Teams - Post Message.png](/media/MS%20Teams%20-%20Post%20Message.png) - Logo for the Post to Channel step
