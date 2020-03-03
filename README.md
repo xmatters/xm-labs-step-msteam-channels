@@ -1,10 +1,12 @@
-# Create a MS Teams Channel in an existing Team for xMatters Flow Designer
-This is a collection of custom steps that use the new Microsoft Graph API.  The ultimate aim is to create a new Channel in an existing Team in MS Teams.  It's also possible you may find use for some of these steps to help do other things.
+# Create a MS Teams Channel and post to it with xMatters Flow Designer
+This is a collection of custom steps that use the new Microsoft Graph API.  The ultimate aim is to create a new Channel in an existing Team in MS Teams and post a message to it.  It's also possible you may find use for some of these steps to help do other things.
 
-We're going to be putting in 3 steps which each do things that help us create a channel.  These are:
-1. **Authenticate** - Use some predefined tokens to authenticate on the API and get an access token that lets us cary out other actions for a short time.
-1. **Get Team Info** - Find an existing Team knowing the Group and Team name and bring back the Team ID and other info.
+We're going to be adding 5 steps which each do things that help us create a channel.  These are:
+1. **Application Authenticate** - Use some predefined tokens to authenticate on the API and get an access token that lets us cary out other actions for a short time.
+1. **Delegated Authenticate** - Use some predefined tokens and a username and password to authenticate on the API and get an access token that lets us cary out actions as a user for a short time.
+1. **Get Team Info** - Find an existing Team knowing the Group / Team name and bring back the Team ID and other info.
 1. **Create Channel** - Create a channel in an existing Team knowing the ID of the existing Team.
+1. **Post to Channel** - Post a message to an existing channel knowing name of the channel and the ID of the Team it is in.
 
 The usual use here would be to have xMatters create a new channel dedicated to the resolution of a newly discovered issue, perhaps when xMatters is initiated automatically by some monitoring tool or perhaps when a Major Incident is newly declared.  If you find other uses for this though please let us know!
 
@@ -12,6 +14,7 @@ The usual use here would be to have xMatters create a new channel dedicated to t
 1. *Can we create a team dynamically?*
 
     Yes it's been done but we don't do it here.
+
 1. *I don't want to do this straight into my prod Office 365, where can I test it?*
 
     You can't test in a Free Teams, it is missing some important elements.  You can create a Office 365 Trial and test there though.  See [Free versions of MS Teams and the Office 365 Trial Subscription](#free-versions-of-ms-teams-and-the-office-365-trial-subscription)
@@ -29,26 +32,35 @@ This is repo is part of the [xMatters Labs Flow Steps](https://github.com/xmatte
 
 # Files
 
-* [README.md](README.md) - This file, which has all the code and setup instructions. Just about everything you need!
-* [MS Teams - Authenticate.png](/media/MS%20Teams%20-%20Authenticate.png) - Logo for the Authenticate step
-* [MS Teams - Get Team.png](/media/MS%20Teams%20-%20Get%20Team.png) - Logo for the Authenticate step
-* [MS Teams - Create Channel.png](/media/MS%20Teams%20-%20Create%20Channel.png) - Logo for the Authenticate step
+* [README.md](README.md) - This file, setup help and instructions. A great start!
+* [MSTeamsManageChannels.zip](MSTeamsManageChannels.zip) - An export of an xMatters Workflow containing all 5 steps and an example flow to get you started. Everything you need!
+* [MS Teams - Authenticate.png](/media/MS%20Teams%20-%20Authenticate.png) - Logo for the Application Authenticate step
+* [MS Teams - Delegated Authenticate.png](/media/MS%20Teams%20-%20Delegated Authenticate.png) - Logo for the Delegated Authenticate step
+* [MS Teams - Get Team.png](/media/MS%20Teams%20-%20Get%20Team.png) - Logo for the Get Team Info step
+* [MS Teams - Create Channel.png](/media/MS%20Teams%20-%20Create%20Channel.png) - Logo for the Create Channel step
+* [MS Teams - Post Message.png](/media/MS%20Teams%20-%20Post%20Message.png) - Logo for the Post to Channel step
 
 # Microsoft Teams
-[Microsoft Teams](https://products.office.com/en-us/microsoft-teams/group-chat-software) is the chat tool that comes as part of the [Microsoft Office 365](https://www.office.com/) suite.  MS Teams has its own (slightly older) API but we're not making use of it here.  Instead we're using the [Microsoft Graph API](https://docs.microsoft.com/en-us/graph/overview) for Office 365 which can do all sorts of things in the MS Office environment, including creating a Channel in an MS Teams Team.
+[Microsoft Teams](https://products.office.com/en-us/microsoft-teams/group-chat-software) is the chat tool that comes as part of the [Microsoft Office 365](https://www.office.com/) suite.  MS Teams has its own (slightly older) API but we're not making use of it here.  Instead we're using the [Microsoft Graph API](https://docs.microsoft.com/en-us/graph/overview) for Office 365 which can do all sorts of things in the MS Office environment, including creating a Channel in an MS Teams Team and post to a Channel without needing a channel web hook.
+
+## MS Teams and xMatters
+
+If all you want to do is post to a standard channel in Teams you can do it much more simply than with this repo. Do check out the [built in step for MS Teams](https://help.xmatters.com/ondemand/xmodwelcome/flowdesigner/microsoft-teams-steps.htm) which uses the Teams API and leverages [Connectors in Teams](https://docs.microsoft.com/en-us/microsoftteams/office-365-custom-connectors).
+
+If you want to make callout events right from Teams then do look up our [bot integration for MS Teams](https://help.xmatters.com/integrations/socialchat/microsoftteams.htm).  Though it is separate to the work in this repo it's complimentary and you may well want to put the xMatters bot in the channels you auto create to enable Teams users to leverage the power of xMatters right from the chat window.
 
 ## Free versions of MS Teams and the Office 365 Trial Subscription
-This process will not work with a free Teams the like that you'll get by signing up at https://products.office.com/en-us/microsoft-teams/group-chat-software.  It doesn't work because we need the Microsoft Graph API and the Azure Console portal to setup permissions and these don't come with the free Teams.  However, you can sign up for an Office 365 Trial Subscription which will come with Teams, the Graph API and the Azure Console.
+This process will not work with a free Teams the like you'll get by signing up at products.office.com/en-us/microsoft-teams/group-chat-software.  It doesn't work because we need the Microsoft Graph API and the Azure Console portal to setup permissions and these don't come with the free Teams.  However, you can sign up for an Office 365 Trial Subscription which will come with Teams, the Graph API and the Azure Console.
 
-To get an Office 365 Trial follow [Phase 2 of Office 365 dev/test environment](https://docs.microsoft.com/en-us/office365/enterprise/office-365-dev-test-environment#phase-2-create-an-office-365-trial-subscription) choosing the "*lightweight Office 365 dev/test environment*" option.  You do not need to do Phase 1, 3 or 4.
+To get an Office 365 Trial follow Phase 1 of [The lightweight base configuration](https://docs.microsoft.com/en-gb/microsoft-365/enterprise/lightweight-base-configuration-microsoft-365-enterprise). You only need to do **Phase 1: Create your Office 365 E5 subscription**.
 
-When you're done you'll have a login username and password for a global admin on your new Office Environment.  The username will be an email address that ends .onmicrosoft.com.  This account can be used to login to the Teams UI and to the Azure Console as a global admin in the next sections.
+When you're done you'll have a login username and password for a global admin on your new Office Environment.  The username will be an email address that ends `.onmicrosoft.com`.  This account can be used to login to the [Teams WebUI](https://teams.microsoft.com/) and Desktop App as well as the [Azure Console](https://portal.azure.com) as a global admin in the next sections.
 
 # Microsoft Office 365 setup via Azure Console
 These steps work by making calls on the [Microsoft Graph API](https://docs.microsoft.com/en-us/graph/overview) for Office 365.  At the time of writing the xMatters inbuilt steps for MS Teams use the Teams API so the authentication for these steps are quite different (though they can be used in a flow along with the built in steps).  We're going to need to access the Microsoft Azure Console portal for your Office 365 environment and add an App Registration which will enable xMatters to use the Graph API to query and make changes to your Teams application inside Office 365.
 
 ## Add an App Registration
-An app registration is a bit like a user account for xMatters to use to connect to the Graph API
+An app registration is how xMatters connects to the Graph API.
 
 1. Log into the Azure Console with a company account at https://portal.azure.com
     <img width=90% src="media/Create Registration.gif" >
@@ -75,7 +87,11 @@ The App Registration you've just created needs to have some permissions added so
 1. Find **Directory** > **Directory.ReadWrite.All** and select it.  Click **Add permissions**
 1. Again click **Add a permission** to add more permissions.
 1. This time at the top choose the large **Microsoft Graph** box.
-1. Again click **Application permissions** on the right.
+1. Click **Delegated permissions** on the left.
+1. Find and select:
+ - **Group** > **Group.ReadWrite.All**
+ - **User** > **User.Read**
+10. Now back at the top click **Application permissions** on the right.
 1. Find and select:
  -  **Directory** > **Directory.ReadWrite.All**
  -  **Group** > **Group.ReadWrite.All**
@@ -94,488 +110,152 @@ A client secret is a bit like the password that xMatters will need to know to be
 1. Enter a **Description** if you want.  Choose how long you want this secret to last before it expires.  Click **Add**
 1. A **Client Secret** will be created and you'll be able to see the value.  Make note of this with the Client ID and Tenant ID, you'll need it later too.
 
+## Create an xMatters User
+
+<img width=90% src="media/Add xMatters User.gif" >
+
+This is optional, but if the aim is to post messages to a channel, even just to start the channel with some details of what it was created for, you're going to need to post *as* someone.  Though it will probably work as you it's nice if it doesn't look like it's you that's posting all these messages.  It probably makes sense to create a user that represents xMatters.  You can do that here in the Azure Portal and get the new user's **Username** and **Password**.  Keep them safe as we're actually going to need them in the xMatters configuration.
+
+Once you've created the new user just log into Teams as them and accept the terms and conditions and go thorough the mandatory password change.  This is also a good time to create the Team you want to put the channels into if you haven't already.  If you have created the team join it as this user.
 
 # Flow Designer Steps
 
-Here are the configurations and scripts you will require to create each of the custom steps.  Open a communication plan in xMatters and then open the flow designer for any of the forms/flows.  On the **CUSTOM** tab in right had toolbar you will find the **Create a custom step** button.  For each of these steps click that button and fill in the details as shown here.
-
-Once you have all the custom steps created you can drag them into any flow in that communication plan and configure the step. You can use them over and over again in any flow on that com plan.
-
-## Authenticate
-Authenticate with the Microsoft Graph API and get a session token to authorise subsequent steps.
-
-To do anything in MS Teams through the Graph API you need to first get a session token.  Send in your **Tenant ID**, **Client ID** and **Client Secret** retrieved from the [Azure portal with the above steps](#microsoft-office-365-setup-via-azure-console).  In return you will get a Session Token as an output that can be passed to later steps.
-
-### Settings
-
-| Field | Value |
-| ----- | ----- |
-| Name | MS Teams - Authenticate |
-| Description | Run this step at the beginning of your flow to get an session token that can then be used for each subsequent Teams step. For more details on how to get the three inputs for this step see the instructions on the GitHub repo xm-labs-step-msteam-channels  |
-| Icon | <kbd> <img width=70 src="/media/MS Teams - Authenticate.png"></kbd> |
-| Include Endpoint | Yes |
-| Endpoint Type |	No Authentication |
-| Endpoint Label | MS Graph API |
-
-<img src="media/Authenticate - Settings.png" >
-
-### Inputs
-
-| Name  | Required? | Min | Max | Help Text | Default Value | Multiline |
-| ----- | ----------| --- | --- | --------- | ------------- | --------- |
-| Tenant ID  | Yes | 0 | 2000 | Login to the Azure portal and create an App Registration, you'll be given the "Directory (tenant) ID" which should then be pasted into here. |  | No |
-| Client ID | Yes | 0 | 2000 | Login to the Azure portal and create an App Registration, you'll be given the "Application (client) ID" which should then be pasted into here. |  | No |
-| Client Secret | Yes | 0 | 2000 | Login to the Azure portal and create an App Registration, then in Certificates & secrets on that registration create a Client secret. You'll be given a complex secret which should then be pasted into here. |  | No |
-
-<img src="media/Authenticate - Inputs.png" >
-
-### Outputs
-
-| Name |
-| ---- |
-| Session Authentication Token |
-
-<img src="media/Authenticate - Outputs.png" >
-
-### Script
-
-```javascript
-var sessionToken = bearerToken( input['Tenant ID'], input['Client ID'], input['Client Secret'] );
-
-if ( sessionToken )  {
-    output['Session Authentication Token'] = sessionToken;
-} else {
-    console.log('*** An error prevented the token from being created!');
-}
-
-
-/** bearerToken    (RSelby & AWatson - xMatters Consulting)
-  * Authenticate and receive a token
-  * Returns a token if successful, otherwise false
-  */
-function bearerToken(tenantId, client_id, client_secret)  {
-    console.log("bearerToken starting");
-
-    // Path is https://login.microsoftonline.com/{tenant}/oauth2/v2.0/authorize
-    var request = http.request({
-      "endpoint": "MSTeams",
-      "path": "/"+ tenantId+"/oauth2/v2.0/token",
-      "method": "POST",
-      "headers": {
-      "Content-type": "application/x-www-form-urlencoded"
-      }
-    });
-
-    var details = {
-      'client_id':  client_id,   
-      'grant_type': 'client_credentials',
-      'client_secret': client_secret,  
-      'scope': "https://graph.microsoft.com/.default"
-    };
-
-    var data = [];
-    for (var property in details) {
-        var encodedKey = encodeURIComponent(property);
-        var encodedValue = encodeURIComponent(details[property]);
-        data.push(encodedKey + "=" + encodedValue);
-    }
-    data = data.join("&");
-
-    var response = request.write(data);
-    var token;
-
-    if (response.statusCode == 200) {
-        json = JSON.parse(response.body);
-        token = json.access_token;
-        console.log("bearerToken Success. Bearer Token = " + token);
-        return token;
-    }
-
-    console.log ("bearerToken Didn't work, no bearer token");  
-    console.log(JSON.stringify(response));
-    return false;
+Now for the good stuff!  Download workflow file [MSTeamsManageChannels.zip](MSTeamsManageChannels.zip) and import it to your instance ([help importing workflows](https://help.xmatters.com/ondemand/xmodwelcome/workflows/manage-workflows.htm#ImportExport)).  The workflow has an example flow that uses four new custom steps.  If you want to go ahead and try it simply
+1. Configure the **Delegated Authenticate** step and add the **Client ID** and **Client Secrete** you've created above along with the **Username** and **Password** of a user you want to cary out actions as.
+1. Configure the **Get Team Info** step and add the Team Name of the team you're going to create new channels into.
+1. To look as real as possible there is a HTTP Trigger at the beginning of this example flow that is designed to take a call from our **ServiceNow Engage with xMatters** integration.  If you have ServiceNow you can point the engage form to this trigger.  If you don't have a ServiceNow to hand you can quickly try triggering this with [Postman](https://www.postman.com/) or similar to post a packet like this to the trigger URL.  You can get the trigger URL by configuring the HTTP Trigger step.  Authenticate as your own user using basic.  Make sure you use the Header `Content-Type: application/json`
+```
+{
+	"recipients": [
+	    {"targetName": "YOUR XMATTERS USERNAME"}
+	],
+	"properties" : {
+		"number":"INC12121234",
+		"task_message": "Need some help here",
+		"impact": "1 - Critical",
+		"task_initiator_display_name": "Incident Manager"
+	}
 }
 ```
 
-## Get Team Info
-Gets details for a given Team specified by Team Name returning details including the Team ID.
-
-The returned Team ID is required by the **Create Channel** step to address the Team.  Before you are able to call this step your flow will have had to have used the **Authenticate** step to get a session token which is then passed to this step as an input.
-
-(Each Team has a Group, though not all Groups have Teams.  Any Team's ID is the same as it's Group's ID.  To find a Team you actually look for groups with Teams.  It's all a little confusing.)
-
-
-### Settings
-
-| Field | Value |
-| ----- | ----- |
-| Name | MS Teams - Get Team Info |
-| Description | This step will find a Team and return some information about it including it's ID which can be useful for onward steps.  |
-| Icon | <kbd> <img width=70 src="/media/MS Teams - Get Team.png"></kbd> |
-| Include Endpoint | Yes |
-| Endpoint Type | No Authentication |
-| Endpoint Label | MS Graph API |
-
-<img src="media/Get Team Info - Settings.png" >
-
-### Inputs
-
-| Name  | Required? | Min | Max | Help Text | Default Value | Multiline |
-| ----- | ----------| --- | --- | --------- | ------------- | --------- |
-| Session Authentication Token  | Yes | 0 | 2000 | You must use the MS Teams - Authenticate step earlier in the flow and input the returned session token here |  | No |
-| Team Name | Yes | 0 | 2000 | The display name of the Team you're looking for |  | No |
-
-<img src="media/Get Team Info - Inputs.png" >
-
-### Outputs
-
-| Name |
-| ---- |
-| Team ID |
-| Team Description |
-| Team Web URL |
-| Team is Archived |
-
-<img src="media/Get Team Info - Outputs.png" >
-
-### Script
-
-```javascript
-//A Group isn't exactly the same thing as a Team but they are related 1 to 1 :
-//
-//Every team is associated with a group. The group has the same ID as the team - for example, /groups/{id}/team is the same as /teams/{id}
-// https://docs.microsoft.com/en-us/graph/api/resources/team?view=graph-rest-1.0
-//
-//[A group] represents an Azure Active Directory (Azure AD) group, which can be an Office 365 group, or a security group.
-// https://docs.microsoft.com/en-us/graph/api/resources/group?view=graph-rest-1.0
-
-
-var groupID = getGroup(input['Team Name'], input['Session Authentication Token']);
-if ( groupID )  {
-
-    var teamObj = getTeam( groupID, input['Session Authentication Token']);
-    if ( teamObj )  {
-        console.log('Found group and team with display name "' + input['Team Name'] + '"');
-        output['Team ID'] = groupID;
-        if ( teamObj.description )  {
-            output['Team Description'] = teamObj.description;
-        } else {
-            output['Team Description'] = '';
-        }
-        output['Team Web URL'] = teamObj.webUrl;
-        output['Team is Archived'] = teamObj.isArchived;
-        //Add any other outputs you need
-
-    } else {
-        console.log('Found the group with display name "' + input['Team Name'] + '" but could not find a team associated with it.');
-
-    }
-
-} else {
-    console.log('Could not find a group with the display name "' + input['Team Name'] + '"');
-
-}
-
-
-/** getGroup  (RSelby & AWatson - xMatters Consulting)
-  * Check for existence of a group
-  * Return it's ID if we find it. Otherwise false.
-  */
-function getGroup(groupName, token)
-{
-    console.log("getGroup - Looking for "+groupName);
-
-    // Gotta LIST all groups with a search filter
-    var request = http.request({
-    "endpoint": "MS Graph API",
-    "path": "/v1.0/groups?$filter=startswith(displayName,'"+ encodeURIComponent(groupName) +"')",
-    "method": "GET",
-    "headers": {
-      "Authorization": "Bearer " + token
-    }
-  });
-
-  var response = request.write();
-  //var msUserId;   //ARW don't think we need this
-  var statusCode = response.statusCode;
-  if ( statusCode == 200)
-  {
-        json = JSON.parse(response.body);
-        var groupList=[];
-        groupList = json.value;
-        console.log("getGroup Pulled listing of "+ groupList.length +" groups");  
-
-        for (var i = 0; i< groupList.length; i++)
-        {
-            var displayName = groupList[i].displayName;
-            console.log("getGroup Got group called  " + displayName);
-            if (displayName == groupName){
-                var groupId = groupList[i].id;
-                console.log("getGroup Bingo! Returning id "+ groupId);
-                return  groupId;
-            }
-        }
-
-        console.log("getGroup - Don't see it");
-        return false;
-    }
-    console.log("getGroup - Bad request " + statusCode);
-    return false;
-}
-
-
-/** getTeam  (RSelby & AWatson - xMatters Consulting)
-  * Look for a Team within a Group
-  * Return it as an object if we find it. Otherwise false.
-  * The webUrl property is going to be very handy in the returned data.
-  *
-  * Example Output Object:
-{
-  "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#teams/$entity",
-  "id": "15e8b5c8-0223-42c4-be7e-82c362e49a03",
-  "displayName": "Penguin Major Incidents",
-  "description": null,
-  "internalId": "19:2805c6a56a0742fe9f1c81838eded38d@thread.skype",
-  "webUrl": "https://teams.microsoft.com/l/team/19:2805c6a56a0742fe9f1c81838eded38d%40thread.skype/conversations?groupId=15e8b5c8-0223-42c4-be7e-82c362e49a03&tenantId=1d129432-b0c3-45f1-8f54-5c691ceed94e",
-  "isArchived": false,
-  "discoverySettings": {
-    "showInTeamsSearchAndSuggestions": true
-  },
-  "memberSettings": {
-    "allowCreateUpdateChannels": true,
-    "allowDeleteChannels": true,
-    "allowAddRemoveApps": true,
-    "allowCreateUpdateRemoveTabs": true,
-    "allowCreateUpdateRemoveConnectors": true
-  },
-  "guestSettings": {
-    "allowCreateUpdateChannels": false,
-    "allowDeleteChannels": false
-  },
-  "messagingSettings": {
-    "allowUserEditMessages": true,
-    "allowUserDeleteMessages": true,
-    "allowOwnerDeleteMessages": true,
-    "allowTeamMentions": true,
-    "allowChannelMentions": true
-  },
-  "funSettings": {
-    "allowGiphy": true,
-    "giphyContentRating": "moderate",
-    "allowStickersAndMemes": true,
-    "allowCustomMemes": true
-  }
-}
-  */
-function getTeam( groupId, token)
-{
-    console.log("getTeam - Retrieving Team in group "+groupId);
-
-    var request = http.request({
-      "endpoint": "MS Graph API",
-      "path": "/v1.0/teams/"+ encodeURIComponent(groupId),
-      "method": "GET",
-      "headers": {
-      "Authorization": "Bearer " + token
-     }
-    });
-    var response = request.write();
-    var statusCode =response.statusCode;
-    if (statusCode==200){
-        json = JSON.parse(response.body);
-        console.log('getTeam - Found it. Returning Team Object');
-        return json;
-    }
-
-    console.log('getTeam - status '+statusCode+'. No Team in group ' + groupId);
-    return false;
-}
-```
-
-
-## Create Channel
-Creates a new Channel, of any valid given name, within an existing Team in MS Teams.
-
-Before you are able to call this step your flow will have had to have used the **Authenticate** step to get a session token which is then passed to this step as an input.  Most likely you will also want to have used the **Get Team Info** step in the flow to get the unique ID of the Team you want to create the channel in as that also needs to be passed to this step.  (If you want to specify the Team ID in a constant that's fine, but we prefer using a constant for the Team Name.)
-
-
-### Settings
-
-| Field | Value |
-| ----- | ----- |
-| Name | MS Teams - Create Channel |
-| Description | Specify a channel name and this step will create the channel if it doesn't already exist and return the created channel ID. If the channel does already exist we simply return the ID of the channel.  |
-| Icon | <kbd> <img width=70 src="media/MS Teams - Create Channel.png"></kbd> |
-| Include Endpoint | Yes |
-| Endpoint Type | No Authentication |
-| Endpoint Label | MS Graph API |
-
-<img src="media/Create Channel - Settings.png" >
-
-
-### Inputs
-
-| Name  | Required? | Min | Max | Help Text | Default Value | Multiline |
-| ----- | ----------| --- | --- | --------- | ------------- | --------- |
-| Session Authentication Token  | Yes | 0 | 2000 | You must use the MS Teams - Authenticate step earlier in the flow and input the returned session token here |  | No |
-| Channel Name | Yes | 0 | 2000 | The name of the channel you want to create |  | No |
-| Channel Description | No | 0 | 2000 | Help others find the right channel by providing a description |  | Yes |
-| Team ID | Yes | 0 | 2000 | This is the ID of the Office 365 Group that is associated with the Team we want to create the Channel in. You can use the MS Teams - Get Team IDs step earlier in the flow to find this from the Team name. |  | No |
-
-<img src="media/Create Channel - Inputs.png" >
-
-### Outputs
-
-| Name |
-| ---- |
-| Channel ID |
-| Channel Web URL |
-| Channel Already Existed? |
-
-<img src="media/Create Channel - Outputs.png" >
-
-### Script
-
-```javascript
-output['Channel Already Existed?'] = 'FALSE';
-
-var existingChannel = getChannel(input['Channel Name'], input['Team ID'], input['Session Authentication Token']);
-
-if ( existingChannel )  {
-    console.log('The channel already exists, returning channel ID to flow');
-    output['Channel Already Existed?'] = 'TRUE';
-    output['Channel ID'] = existingChannel.id;
-    output['Channel Web URL'] = existingChannel.webUrl;
-
-} else {
-
-    var newChannel = createChannel(input['Channel Name'], input['Channel Description'], input['Team ID'], input['Session Authentication Token'] );
-
-    if ( newChannel ) {
-        console.log('The channel did not exist and so was created.');
-        output['Channel ID'] = newChannel.id;
-        output['Channel Web URL'] = newChannel.webUrl;
-
-    } else {
-        console.log('The channel did not exist but something went wrong trying to create it.');
-        output['Channel ID'] = '';
-    }
-
-}
-
-
-
-/** createChannel  (RSelby & AWatson - xMatters Consulting)
-  * Make a Channel inside a Team  
-  * Returns Channel object, or false if it can't be created.
-  * webUrl is one of the properties of the Channel object, which could be useful
-  *
-  * Returned object example:
-{
-  "@odata.context": "https://graph.microsoft.com/v1.0/$metadata#teams('15e8b5c8-0223-42c4-be7e-82c362e49a03')/channels/$entity",
-  "id": "19:48da5016f72f4884862e00e545b98d0f@thread.skype",
-  "displayName": "My new channel",
-  "description": "This is a channel description",
-  "email": "",
-  "webUrl": "https://teams.microsoft.com/l/channel/19%3a48da5016f72f4884862e00e545b98d0f%40thread.skype/My+new+channel?groupId=15e8b5c8-0223-42c4-be7e-82c362e49a03&tenantId=1d129432-b0c3-45f1-8f54-5c691ceed94e"
-}
-  */
-function createChannel(channelName, channelDesc, groupId, token) {
-    console.log("createChannel starting for "+channelName + " in group "+groupId);
-
-    var request = http.request({
-      "endpoint": "MS Graph API",
-      "path": "/v1.0/teams/"+groupId+"/channels",
-      "method": "POST",
-      "headers": {
-      "Authorization": "Bearer " + token
-      }
-    });
-
-    // Configure Channel settings
-    var data = {
-     "displayName":channelName,
-     "description":channelDesc
-    };
-
-    var response = request.write(data);
-    var statusCode = response.statusCode;
-    if ( statusCode== 201) {
-        json = JSON.parse(response.body);
-        console.log('createChannel - Created it. Returning Channel '+channelName);
-        return json;
-    }
-    else     {
-        console.log("createChannel statusCode is "+statusCode +". Unable to create channel");
-    }
-    return false;
-}
-
-
-
-/** getChannel  (RSelby & AWatson - xMatters Consulting)
-  * Look for a Channel within a Group
-  * Return it as an object if we find it. Otherwise false.
-  *
-  * Returned object example:
-{
-  "id": "19:48da5016f72f4884862e00e545b98d0f@thread.skype",
-  "displayName": "My new channel",
-  "description": "This is a channel description",
-  "email": "",
-  "webUrl": "https://teams.microsoft.com/l/channel/19%3a48da5016f72f4884862e00e545b98d0f%40thread.skype/My+new+channel?groupId=15e8b5c8-0223-42c4-be7e-82c362e49a03&tenantId=1d129432-b0c3-45f1-8f54-5c691ceed94e"
-}
-  */
-function getChannel(channelName, groupId, token)
-{
-    console.log("getChannel - Looking for "+ channelName + " in group "+groupId);
-
-    var request = http.request({
-      "endpoint": "MS Graph API",
-      "path": "/v1.0/teams/"+groupId+"/channels",
-      "method": "GET",
-      "headers": {
-      "Authorization": "Bearer " + token
-     }
-    });
-    var response = request.write();
-    var statusCode =response.statusCode;
-    var channels = [];
-    if (statusCode==200){
-        json = JSON.parse(response.body);
-        channels = json.value;    
-        channelCount = json.value.length;
-        if (!channelCount){
-            console.log('getChannel - No channels returned when looking for name ' + channelName + '!');
-            return false;
-        }
-
-        console.log('getChannel - Found '+channelCount + " channels. Looking for "+channelName );
-        for (var j=0;  j < channelCount; j++)
-        {
-            var channel = channels[j];
-            console.log('getChannel - '+j+'. Comparing '+ channel.displayName);
-
-            if (channel.displayName == channelName) {
-                console.log('getChannel - Found!');
-                return channel;
-            }
-        }
-        console.log('getChannel - Channels returned but no '+channelName+' channel found in the list');
-        return false;
-    }
-
-    console.log('getChannel - status '+statusCode+'. Not good.');
-    return false;
-}
-```
+By importing this workflow the custom steps will be added you your instance in state Development and unshared.  In this state you personally will be able to use them in this and other workflows.  When you're happy with them you should [set their state to Deployed](https://help.xmatters.com/ondemand/xmodwelcome/flowdesigner/manage-step-versions.htm#CreateVersion) and if you want other people to be able to use them you should [share the steps](https://help.xmatters.com/ondemand/xmodwelcome/flowdesigner/share-steps.htm) too.
+
+## Authentication Steps
+
+Each flow you execute with Teams actions needs to first authenticate with the Microsoft Online Authentication API and get a token.  The following steps need to use an **endpoint** with the base URL `https://login.microsoftonline.com` [Help adding endpoints](https://help.xmatters.com/ondemand/xmodwelcome/flowdesigner/components.htm#Endpoints)
+
+Both steps will output an authentication token on success, you can then use that token as many times as you like.  However, some steps need different kinds of authentication tokens.  There are two kinds of authenticated tokens available, Application Authentication and Delegated Authentication.
+
+### Application Authenticate
+<img width=50px src="media/MS Teams - Authenticate.png" >
+
+Use the Tenant ID, Client ID and Client Secret you've created above to obtain a token that enables you to take anonymous actions in Teams.  Creating and querying channels need simple permissions, you don't need to pretend to be anyone to do it.  When it comes to posting to a channel you need to be someone and this isn't going to work.
+
+This token will work with the following steps:
+- Get Team Info
+- Create Channel
+
+### Delegated Authenticate
+<img width=50px src="media/MS Teams - Delegated Authenticate.png" >
+
+Use the Client ID and Client Secrete you've created above along with the username and password of a user you want to cary out actions as.  A token from this step will allow you to do anything that user is aloud to do.  There are some things, like posting to channels, that require you to do them as a user - so you'll need to use this authentication to do them.
+
+This token will work with the following steps where the delegated user used has permission to cary out the requested action:
+- Get Team Info
+- Create Channel
+- Post to Channel
+
+## Graph API Steps for MS Teams
+
+Once you're authenticated with the steps above you can use the token you've got to cary out actions in Teams with these steps.  The following steps need to use an **endpoint** with the base URL `https://graph.microsoft.com` [Help adding endpoints](https://help.xmatters.com/ondemand/xmodwelcome/flowdesigner/components.htm#Endpoints)
+
+### Get Team Info
+<img width=50px src="media/MS Teams - Get Team.png" >
+
+Look up a team by Team Name and get back some details.  This is most useful to get the Team ID which is required for most further steps.
+
+Inputs:
+- `Session Authentication Token` Application Authenticated or Delegated Authenticate
+- `Team Name` The name of the team as you read it in MS Teams
+
+Outputs:
+- `Team ID`
+- `Team Description`
+- `Team Web URL`
+- `Team is Archived`  (is the team archived)
+
+
+### Create Channel
+<img width=50px src="media/MS Teams - Create Channel.png" >
+
+Create a new channel in a team. If the channel already exists the step will complete successfully and return all the normal detail about the channel. In this case `Channel Already Existed?` will show as `TRUE`. If the channel could not be created for any other reason the step will fail.
+
+Inputs:
+- `Session Authentication Token` Application Authenticated or Delegated Authenticated
+- `Channel Name` Name the new channel
+- `Channel Description` Optional
+- `Team ID` The internal ID of the team to create the channel in
+
+Outputs:
+- `Channel ID`  Internal ID of the created channel
+- `Channel Web URL`
+- `Channel Already Existed?`  Did the channel already exist
+
+
+### Post to Channel
+<img width=50px src="media/MS Teams - Post Message.png" >
+
+Post a message to a channel. You can use some HTML in your message.  For instance, use `<br/>` to get a new line within the message and surround text with `<b>` and `<\b>` to make it bold.
+
+Inputs:
+- `Delegated Session Authentication Token` Must be from the Delegated Authenticate step
+- `Team ID` The internal ID of the team that has the channel we're posting to
+- `Channel Name` The name of the Channel we want to post a message to
+- `Message` The message you want to post to the channel
+
+Outputs:  None yet.
+
+## Other steps in the flow
+
+The steps above are all the MS Teams steps in this repo.  However, we do have two more steps in this workflow which are borrowed from other repos and are worthy of their own mention.  These are only here to help illustrate creating the Teams channel in a real environment.
+
+### ServiceNow Engage with xMatters Trigger
+
+From: ServiceNow Engage with xMatters in Flow Designer (To be created)
+
+We touched on this briefly when triggering the flow.  We have to have a beginning to this and typically it's going to be call in to xMatters from another tool over an HTTP trigger.  Here we're using ServiceNow Engage with xMatters as an example to demonstrate a Major Incident callout process.  The Jira Engage with xMatters would certainly be a straight swap.  But perhaps an automatic callout from some monitoring system would also apply for you?  Certainly hooking this up to an event status change to create a new channel when a new event is sent could be useful too?
+
+### Create Advanced xMatters Event
+
+From: [Create Advanced xMatters Event](https://github.com/xmatters/xm-labs-step-xmatters-advanced-event)
+
+When you import this workflow you'll see that we're going to the built in `xMatters Create Event` step.  That works fine and we get an event notification as defined by the form.  However, it's kind of nice to use the URL redirect feature on the Accept response to push people right into the channel you've created.  However, the URL for the newly created channel isn't known until we create it so to do this we need to modify the response options on the event to include the channel URL in the response redirect as we create the event.  Unfortunately the built in step doesn't support this yet.  No need to worry though as we can do it with the Create Advanced xMatters Event step.
+
+If you'd like to use this step it's actually configured and is nearly ready to go.
+<img width=90% src="media/Advanced xMatters Event IB URL.gif" >
+1. Briefly come out of the flow canvas and go to the older **Integration Builder** tab still within your workflow.
+1. In **Inbound Integrations** find `New event with modified responses` and click into it.
+1. At the bottom of the page copy the **Trigger** URL.
+1. Now back in your flow, configure the `Create Advanced xMatters Event` step.
+1. On the **Endpoint** tab click **Edit Endpoints**
+1. Find the endpoint `New event Inbound IB` and paste what you have into the **Base URL** of this endpoint replacing everything that's there.
+1. Click **Save**
+1. Finaly, back on the canvas, move the final link off the `xMatters Create Event` step and onto `Create Advanced xMatters Event` and click **Save**.
+
+Now when you respond **Accept** to the notification via the App or Email you'll be given the option of going straight into the new channel.
 
 # Get Flowing!
-Put it all together in a flow using the **Client ID**, **Tenant ID** and **Client Secret** you got from the Azure Console.  It will probably look similar to my one:
-<img src="media/Flow Example.png" >
+Don't be content with the example flow, get creative and put these steps in all the flows you have when you want to interact with MS Teams.  Remember that when you use these steps in other workflows you will need to add both the authentication and graph endpoints to those workflows. What can you create!?
 
-Please consider using com plan constants for any fixed values that you want to put in the steps, in particular the 3 authentication IDs and Codes.   If you want to use them again in other flows it makes is so much easier to quickly change them all at the same time if you used constants.
+**Note:**
+Please consider using com plan constants for any fixed values that you want to put in the steps, in particular the authentication IDs, Codes, usernames and passwords.   If you want to use them again in other flows it makes it so much easier to quickly change them all at the same time if you have used constants.
 
 There's lots of help on [Flow Designer on the xMatters help pages](https://help.xmatters.com/ondemand/xmodwelcome/flowdesigner/laying-out-flow-designer.htm).
 
-(Copyright xMatters Feb 2020)
+# What more do you want?
+This is a community project to make our ecosystem better.  We value your input, and where possible you active participation.  We'd like to add:
+- Scrape the channel history so it can be posted to another system
+- Archive / Delete a channel
+- Create a Team
+
+What else should be added?  Join the discussion on the [xMatters Community](https://support.xmatters.com/hc/en-us/community/topics/200330486-Integrations-Toolchains).
