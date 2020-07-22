@@ -1,6 +1,10 @@
 # Create a MS Teams Channel and post to it with xMatters Flow Designer
 This is a collection of custom steps that use the new Microsoft Graph API.  The ultimate aim is to create a new Channel in an existing Team in MS Teams and post a message to it.  It's also possible you may find use for some of these steps to help do other things.
 
+# NOTE
+This has been deprecated in favor of this repo [here](https://github.com/xmatters/xm-labs-steps-microsoft-teams). Go there. Not here. 
+
+
 We're going to be adding 5 steps which each do things that help us create a channel.  These are:
 1. **Application Authenticate** - Use some predefined tokens to authenticate on the API and get an access token that lets us cary out other actions for a short time.
 1. **Delegated Authenticate** - Use some predefined tokens and a username and password to authenticate on the API and get an access token that lets us cary out actions as a user for a short time.
